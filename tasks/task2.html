@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <a href="../index.html"> Назад</a>
+    </h3>
+    <p>
+        Розробити функцію, у яку передають об’єкт (день, місяць, рік). Визначити, який буде рік через N місяців.
+    </p>
+
+    <script>
+        let userDate = {
+            day: 30,
+            month: 3,
+            year: 2023
+        }
+        function getYear(userDate, N) {
+            let numberYears = Math.floor((userDate.month + N) / 12)
+            let newYear = userDate.year + numberYears
+            return newYear
+        }
+
+        const N = parseInt(prompt('Введіть кількість місяців'))
+        const shiftedYear = getYear(userDate, N)
+
+        document.write(`Через ${N} місяців буде ${shiftedYear} рік`)
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <a href="../index.html"> Назад</a>
+    </h3>
+    <p>
+        Описати масив об’єктів – сайтів розроблених компанією з такими властивостями<br>
+        Знайти:<br>
+        1) загальну вартість усіх сайтів<br>
+        2) кількість сайтів, що було зроблено між 2000 та 2009 рр.<br>
+        3) кількість сайтів, де сума спонсорських вкладень була більшою за 100000<br>
+        4) створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив)<br>
+        5) знайти рік, коли прибуток був найбільшим<br>
+        6) упорядкувати список за спаданням прибутку<br>
+        7) Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000
+    </p>
+
+<script>
+        let sites = [
+	    {
+		company: "Company A",
+		owner: "Owner A",
+		sponsors: [
+			{ 
+				surname: "Surname A1", 
+				name: "Name A1", 
+				investment: 50000
+			},
+			{
+				surname: "Surname A2", 
+				name: "Name A2", 
+				investment: 10000
+			},
+			{
+				surname: "Surname A3", 
+				name: "Name A3", 
+				investment: 15000
+			},
+		],
+		year: 2000,
+		price: 8000,
+	},
+	{
+		company: "Company B",
+		owner: "Owner B",
+		sponsors: [
+			{ 
+				surname: "Surname B1", 
+				name: "Name B1", 
+				investment: 15000
+			},
+			{
+				surname: "Surname B2", 
+				name: "Name B2", 
+				investment: 200000
+			},
+			{
+				surname: "Surname B3", 
+				name: "Name B3", 
+				investment: 25000
+			},
+		],
+		year: 2016,
+		price: 21000,
+	},
+	{
+		company: "Company С",
+		owner: "Owner С",
+		sponsors: [
+			{ 
+				surname: "Surname С1", 
+				name: "Name С1", 
+				investment: 100000
+			},
+			{
+				surname: "Surname С2", 
+				name: "Name С2", 
+				investment: 20000
+			},
+			{
+				surname: "Surname С3", 
+				name: "Name С3", 
+				investment: 300000
+			},
+		],
+		year: 2007,
+		price: 6000,
+	},
+	{
+		company: "Company D",
+		owner: "Owner D",
+		sponsors: [
+			{ 
+				surname: "Surname D1", 
+				name: "Name D1", 
+				investment: 100000
+			},
+			{
+				surname: "Surname D2", 
+				name: "Name D2", 
+				investment: 20000
+			},
+			{
+				surname: "Surname D3", 
+				name: "Name D3", 
+				investment: 30000
+			},
+		],
+		year: 2003,
+		price: 19000,
+	},
+];
+    //1) Загальна вартість усіх сайтів
+    const totalAmountOfSites = sites.reduce((acc, site) => acc + site.price, 0)
+    document.write(`1) Загальна вартість усіх сайтів:${totalAmountOfSites}<br>`)
+
+    //2. кількість сайтів, що було зроблено між 2000 та 2009 рр:
+        const totalAmountOfSitesMadeFrom2000To2009 = sites.reduce((acc, site) => {
+            if(site.year >= 2000 && site.year <= 2009){
+                return acc+1
+            }
+            return acc
+        }, 0)
+        document.write(`2.кількість сайтів, що було зроблено між 2000 та 2009 рр:${totalAmountOfSitesMadeFrom2000To2009}<br>`)
+
+    //3. кількість сайтів, де сума спонсорських вкладень була більшою за 100000:
+        let sitesAmountWhereSumMoreThan100000 = 0
+        for (const site of sites){
+            let sum = 0
+            for (let i = 0; i < site.sponsors.length; i++){
+                sum += site.sponsors[i].investment
+            }
+            if (sum > 100000) sitesAmountWhereSumMoreThan100000++
+        }
+        document.write(`3.кількість сайтів, де сума спонсорських вкладень була більшою за 100000:${sitesAmountWhereSumMoreThan100000}<br>`)
+
+    //4. створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив
+        const siteSponsors = sites.map((site) => {
+            let sponsorsName = []
+            for(let i = 0; i < site.sponsors.length; i++){
+                sponsorsName.push(site.sponsors[i].name)
+            }
+            return sponsorsName
+        })
+        document.write(`4.створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив${siteSponsors}<br>`)
+
+    //5. 
+        let mostProfitableYear
+        let maxProfitOfYear = sites[0].price
+        for (const site of sites){
+            if (site.price > maxProfitOfYear){
+                mostProfitableYear = site.year
+                maxProfitOfYear = site.price
+            }
+        }
+        document.write(`5.знайти рік коли прибуток був найбільшим${mostProfitableYear}<br>`)
+
+    //6. упорядкувати список за спаданням прибутку
+        document.write('упорядкувати список за спаданням прибутку<br>');
+        let sites2 = JSON.parse(JSON.stringify(sites))
+        sites2.sort((a, b) => b.price - a.price)
+        console.log(sites2);
+
+    //7. 
+        document.write('Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000');
+        const sitePriceThanLess10000 = sites.filter((site) => site.price < 10000)
+        const sitePriceThanMore10000 = sites.filter((site) => site.price > 10000)
+
+        console.log(sitePriceThanLess10000);
+        console.log(sitePriceThanMore10000);
+
+        
+
+
+
+
+
+// document.write(`
+//             1) Загальна вартість усіх сайтів:${totalAmountOfSites}<br>
+//             2) кількість сайтів, що було зроблено між 2000 та 2009 рр:${numberWebsiteBetween}<br>
+//             3) кількість сайтів, де сума спонсорських вкладень була більшою за 100000:${numberWebsiteMore100000}<br>
+//             4) створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив)${allSponsors}<br>
+//             5) знайти рік${maxYear}, коли прибуток був найбільшим${maxProfit}<br>
+//             6) упорядкувати список за спаданням прибутку${listInDescendingOrderOfProfit}<br>
+//             7) Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000${arrWebsiteLess10000} і більше 10000${arrWebsiteMore10000}
+//         `)
+</script>
+</body>
+
+</html>
